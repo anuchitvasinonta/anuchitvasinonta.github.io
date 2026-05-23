@@ -1,0 +1,23 @@
+title: Greatnote
+description: Notes on telecom, IT, and life
+baseurl: ""
+url: "https://greatnote.com"
+lang: th
+
+# Build settings
+markdown: kramdown
+theme: minima
+
+# Encoding
+encoding: utf-8
+
+permalink: /:year/:month/:day/:title/
+
+# Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed

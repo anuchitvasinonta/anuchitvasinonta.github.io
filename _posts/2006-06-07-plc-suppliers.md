@@ -1,0 +1,9 @@
+---
+layout: post
+title: PLC Suppliers
+date: 2006-06-07 07:27:54 +0700
+categories: ["Telecom"]
+comments: 1
+---
+
+ Got a list of PLC supplier. Thought I might need this later on.<br> <div>   <table border="0" cellpadding="1" cellspacing="0" width="100%">     <tbody>     <tr>       <td valign="top" width="50%">         <span style="font-weight: bold;">In House Components:</span><br>         Adaptive Networks<br>         Cogency<br>         DS2<br>         Echelon<br>         Enikia<br>         Inari<br>         Intellon<br>         Itran<br>         nSine<br>         <br>         <span style="font-weight: bold;">In House Products:</span><br>         Corinex Global<br>         Crosstainment<br>         Easyplug<br>         GigaFast<br>         LANergy<br>         Linksys<br>         NetGear<br>         Phonex Broadband<br>         PLCom<br>         PolyTrax IT<br>         PowerNet<br>         SMC Networks<br>         <br>         <span style="font-weight: bold;">In House Solutions:</span><br>         Ascom<br>         InovaTech<br>         Main.net/PowerPLUS<br>         NAMS (Nisko)<br>         Xeline (formerly Keyin)       </td>       <td valign="top" width="50%">         <span style="font-weight: bold;">Access Components:</span><br>         Adaptive Networks<br>         DS2<br>         Echelon<br>         Enikia<br>         Itran<br>         <br>         <span style="font-weight: bold;">Access Products:</span><br>         Adaptive Networks<br>         Echelon<br>         <br>         <span style="font-weight: bold;">Access Solutions:</span><br>         ArchNet<br>         Ambient Corporation<br>         Amperion<br>         Ascom<br>         Australon<br>         InovaTech<br>         Intracoastal<br>         Main.net/PowerPLUS<br>         MeterLink<br>         NAMS(Nisko)<br>         PowerTec<br>         Xeline (formerly Keyin)       </td>     </tr>     </tbody>   </table> </div> <br> <br> <br>

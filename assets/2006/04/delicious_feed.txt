@@ -1,0 +1,26 @@
+<?php
+//------------------------------------Script Added for Feed Reader--------------------------------
+if ($rs = aggrss('http://del.icio.us/rss/anuchit/public',false,5)) {
+	echo "<h2>Latest del.icio.us</h2>\n";
+	//echo $rs[description] . "<br />\n";
+	echo "<ul>\n";
+
+    //echo $rs['items'][1]['link'];  I could add a method to randomize this and show link at random later on
+
+
+	foreach ($rs['items'] as $item) {
+		echo "<li><a href='" .$item['link']. "'>" . $item['title'] . "</a><br>" .html_entity_decode($item['description']). "</li>\n";
+	}
+?>
+	<li><a href='<?php echo $rs['link']; ?>'>... <image border=0 src='<?php bloginfo('template_directory'); ?>/images/arrow.gif'></a></li>
+
+	<?php
+	echo "</ul>\n";
+	
+	if ($rs['items_count'] <= 0) { echo "Sorry, no items found in the RSS file :-("; }
+}
+else {
+	echo "<!-- It's not possible to reach RSS file -->";
+}
+//-------------------------------------------------end of script added-----------------------------------------
+?>

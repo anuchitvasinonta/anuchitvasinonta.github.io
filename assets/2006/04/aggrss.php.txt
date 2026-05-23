@@ -1,0 +1,132 @@
+<?php
+/*
+Plugin Name: aggrss, an rss aggregator
+Version: 1.1 
+Plugin URI: http://www.soderlind.no/
+Description:  aggrss, an rss aggregator. All RSS versions supported (0.9, 1.0 and 2.0)
+Author: Per Soderlind
+Author URI: http://www.soderlind.no/
+
+History:    1.1 Bugfix
+            1.0 First release
+
+*/ 
+/*
+aggrss, an rss aggregator Copyright (c) 2004 Per Soderlind
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to
+do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall
+be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+/*
+
+aggrss, an rss aggregator
+
+Uses the lastRSS library (http://lastrss.webdot.cz/) to aggregate RSS feeds
+lastRSS (and this plugin) gives you:
+	- All RSS versions supported (0.9, 1.0 and 2.0)
+	- Regullar expression parsing (very quick)
+	- Returns an associative array with RSS fields
+	- RSS tags not present in RSS are also not present in result now
+	- Transparent cache 
+	- Character encoding conversion (all encodings supported by iconv library)
+
+lastRSS is free open-source software (GNU/GPL), this plugin has a BSD license
+
+
+INSTRUCTIONS:
+	
+	- Create the cache directory - wp-content/aggrss-cache - and make it world writeable (chmod 777) 
+	- Create subdir wp-content/plugins/lastRSS 
+	- Extract http://lastrss.webdot.cz/lastRSS.zip and save lastRSS.php in wp-content/plugins/lastRSS 
+	- Save aggrss.php.txt (this file) as aggrss.php in your wp-content/plugins directory 
+	- Activate the plugin from the Plugins page (re-activate (deactivate + activate) if you are upgrading aggrss)	
+	
+USE:
+
+$rs = aggrss($rssurl,$striptags=false,$num=0)
+
+	$rssurl, url to the rss
+	
+	optional parameters:
+		$striptags, if true all html tags will be remove from decriptions.
+		$num, defines the number of records you want to display, $num=0 equals all available
+	
+	aggrss returns the rss content as an associative array with RSS fields, see sample below. 
+
+SAMPLE:
+
+if ($rs = aggrss('http://soderlind.no/feed/rss2/')) {
+	// dump the structure
+	//echo "<pre>";
+	//print_r($rs);
+	//echo "</pre>";
+	echo "<h2><a href='" . $rs[link] . "'>" . $rs[title] . "</a></h2>\n";
+	echo $rs[description] . "<br />\n";
+
+	foreach ($rs['items'] as $item) {
+		echo "<p><a href='" .$item['link']. "'>" . $item['title'] . "</a><br/>" .html_entity_decode($item['description']). "</p>\n";
+	}
+	
+	if ($rs['items_count'] <= 0) { echo "Sorry, no items found in the RSS file :-("; }
+}
+else {
+	echo "<!-- It's not possible to reach RSS file -->";
+}
+
+*/
+
+define(RSSCACHE_TIME, 3600); // one hour, NEVER set this lower than 1200 (20 minutes) - webmasters will hate you otherwise.
+define(RSSCACHE_PATH, trailingslashit( ABSPATH . '/wp-content/aggrss-cache') );
+
+function initAggrss() {
+	global $lastRSS;
+	require_once(dirname(__FILE__) . '/lastRSS/lastRSS.php');
+	
+	if ( !file_exists(RSSCACHE_PATH) ) :
+		if ( is_writable( dirname(RSSCACHE_PATH) ) )
+			$dir = mkdir( RSSCACHE_PATH, 0777);
+		else
+			die("Your cache directory (<code>" . RSSCACHE_PATH . "</code>) needs to be writable for this plugin to work. Double-check it. <a href='" . get_settings('siteurl') . "/wp-admin/plugins.php?action=deactivate&amp;plugin=wp-lastRSS.php'>Deactivate the aggrss plugin</a>.");
+	endif;
+	// create lastRSS object
+	$lastRSS = new lastRSS; 
+	// setup transparent cache
+	$lastRSS->cache_dir = RSSCACHE_PATH;
+	$lastRSS->cache_time = RSSCACHE_TIME; 
+	//
+	$lastRSS->date_format = 'U';
+	
+}
+
+add_filter('wp_head', 'initAggrss');
+
+function aggrss($rssurl,$striptags=false,$num=0) {
+	global $lastRSS;
+	$lastRSS->CDATA= ($striptags) ? "strip" : "content" ;
+	$lastRSS->items_limit=$num;
+	if ($aggr = $lastRSS->Get($rssurl))
+		return $aggr;
+	else
+		return 0;
+}
+?>
