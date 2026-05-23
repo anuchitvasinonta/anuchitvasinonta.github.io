@@ -4,7 +4,7 @@ source "https://rubygems.org"
 # To use the latest gems, upgrade Ruby first — see README below.
 gem "jekyll", "~> 4.2.2"
 gem "ffi", "1.15.5"           # ffi 1.16+ requires Ruby >= 3.0
-gem "minima", "~> 2.5"
+gem "jekyll-theme-tactile"
 
 group :jekyll_plugins do
   gem "jekyll-paginate"
