@@ -4,6 +4,7 @@ title: Inside Darkvoice 3322
 date: 2010-01-31 10:42:19 +0700
 categories: ["DIY", "Gadget", "Home"]
 comments: 0
+image: /assets/uploads/2010/01/3322-2.jpg
 ---
 
 สงสัยต้องเตรียมตัวลงมือซ่อมเองซะแล้ว ดันมีเสียง noise ออกมาทางด้านขวา ต้องหาวงจรก่อน
