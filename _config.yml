@@ -20,7 +20,7 @@ social:
 
 theme_mode: # [light | dark] — leave blank for auto
 
-avatar: # /assets/uploads/avatar.jpg
+avatar: /assets/img/avatar.png
 
 toc: true
 
